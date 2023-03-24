@@ -5,16 +5,24 @@ import java.util.logging.Logger;
 
 public abstract class Cliente {
 
-    private static final Logger logger = Logger.getLogger(Cliente.class.getName());
+    protected final Logger logger;
 
     private double limiteDeCredito;
     private String nome;
     private double limiteDeCreditoDisponivel;
 
-    public Cliente(String nome) {
+    protected Cliente(String nome, double limiteDeCredito, String className) {
         this.nome = nome;
-        this.limiteDeCredito = 0;
-        this.limiteDeCreditoDisponivel = 0;
+        this.limiteDeCredito = limiteDeCredito;
+        this.limiteDeCreditoDisponivel = limiteDeCredito;
+        this.logger = Logger.getLogger(className);
+    }
+
+    protected Cliente(String nome, double limiteDeCredito) {
+        this.nome = nome;
+        this.limiteDeCredito = limiteDeCredito;
+        this.limiteDeCreditoDisponivel = limiteDeCredito;
+        this.logger = Logger.getLogger(Cliente.class.getName());
     }
 
     public String getNome() {

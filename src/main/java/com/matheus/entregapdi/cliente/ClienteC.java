@@ -6,10 +6,7 @@ package com.matheus.entregapdi.cliente;
  *
  */
 public class ClienteC extends Cliente {
-
-    double limiteDeCredito = 1000.0;
     public ClienteC(String nome) {
-        super(nome);
-        this.setLimiteDeCreditoDisponivel(limiteDeCredito);
+        super(nome,1000, ClienteC.class.getName());
     }
 }

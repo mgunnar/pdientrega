@@ -1,6 +1,5 @@
 package com.matheus.entregapdi.cliente;
 
-import java.util.logging.Logger;
 
 /*
  * Clientes tipo A, recebem no momento do cadastro R$ 10.000,00 de limite de crédito.
@@ -15,13 +14,8 @@ public class ClienteA extends Cliente {
     private static final double PORCENTAGEM_DESCONTO = 0.1;
     private static final double AUMENTO_LIMITE_POR_COMPRA = 500.0;
 
-    private static final Logger logger = Logger.getLogger(ClienteA.class.getName());
-
-    double limiteDeCredito = 10000.0;
-
     public ClienteA(String nome) {
-        super(nome);
-        this.setLimiteDeCreditoDisponivel(limiteDeCredito);
+        super(nome, 10000, ClienteA.class.getName());
     }
 
     @Override
@@ -44,7 +38,7 @@ public class ClienteA extends Cliente {
             if (valor >= VALOR_MINIMO_COMPRA_PARA_TER_DESCONTO) {
                 double desconto = valor * PORCENTAGEM_DESCONTO;
                 String mensagem = String.format("Desconto de R$ %.2f aplicado na compra.", desconto);
-                logger.info(mensagem);;
+                logger.info(mensagem);
             }
         }
         return compraAutorizada;
