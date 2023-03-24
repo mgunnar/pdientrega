@@ -1,15 +1,20 @@
 package com.matheus.entregapdi.cliente;
+import java.util.logging.Logger;
+
 
 
 public abstract class Cliente {
+
+    private static final Logger logger = Logger.getLogger(Cliente.class.getName());
+
+    private double limiteDeCredito;
     private String nome;
-    private final double limiteDeCredito;
     private double limiteDeCreditoDisponivel;
 
-    public Cliente(String nome, double limiteDeCredito) {
+    public Cliente(String nome) {
         this.nome = nome;
-        this.limiteDeCredito = limiteDeCredito;
-        this.limiteDeCreditoDisponivel = limiteDeCredito;
+        this.limiteDeCredito = 0;
+        this.limiteDeCreditoDisponivel = 0;
     }
 
     public String getNome() {
@@ -24,6 +29,10 @@ public abstract class Cliente {
         return limiteDeCredito;
     }
 
+    public void setLimiteDeCredito(double limiteDeCredito) {
+        this.limiteDeCredito = limiteDeCredito;
+    }
+
     public double getLimiteDeCreditoDisponivel() {
         return limiteDeCreditoDisponivel;
     }
@@ -34,11 +43,11 @@ public abstract class Cliente {
 
     public boolean comprar(double valor) {
         if (valor > this.limiteDeCreditoDisponivel) {
-            System.out.println("Compra não realizada, limite de crédito insuficiente.");
+            logger.info("Compra não realizada, limite de crédito insuficiente.");
             return false;
         }
         this.limiteDeCreditoDisponivel -= valor;
-        System.out.printf("Compra de R$ %.2f realizada com sucesso\n", valor);
+        logger.info(String.format("Compra de R$ %.2f realizada com sucesso", valor));
         return true;
     }
 }
