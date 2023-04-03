@@ -22,6 +22,7 @@ public class ClienteA extends Cliente {
     public boolean comprar(double valor) {
         boolean compraAutorizada = super.comprar(valor);
 
+
         if (compraAutorizada) {
             double novoLimite = this.getLimiteDeCredito();
             int numAumentos = (int) (valor / 5000.0);

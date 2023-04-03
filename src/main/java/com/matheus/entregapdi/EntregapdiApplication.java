@@ -42,4 +42,6 @@ public class EntregapdiApplication {
 
 	}
 
+	// TODO testar diferentes cenários.
+
 }

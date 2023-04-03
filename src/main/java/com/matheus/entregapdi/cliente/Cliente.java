@@ -49,13 +49,11 @@ public abstract class Cliente {
         this.limiteDeCreditoDisponivel = limiteDeCreditoDisponivel;
     }
 
-    public boolean comprar(double valor) {
-        if (valor > this.limiteDeCreditoDisponivel) {
-            logger.info("Compra não realizada, limite de crédito insuficiente.");
-            return false;
-        }
-        this.limiteDeCreditoDisponivel -= valor;
-        logger.info(String.format("Compra de R$ %.2f realizada com sucesso", valor));
-        return true;
-    }
+    public abstract comprar(double valor);
+
+    public bool
+
+    //TODO tornar método abstrato forçando as classes a implementarem o método;
+    // certificar de fazer o desconto do limite após a autorização o compra.
+    //separar responsabilidades dos métodos  e criar testes unitários para todos os cenários.
 }
