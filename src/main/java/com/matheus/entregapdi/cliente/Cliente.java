@@ -1,6 +1,6 @@
 package com.matheus.entregapdi.cliente;
-import java.util.logging.Logger;
 
+import java.util.logging.Logger;
 
 
 public abstract class Cliente {
@@ -9,19 +9,16 @@ public abstract class Cliente {
 
     private double limiteDeCredito;
     private String nome;
-    private double limiteDeCreditoDisponivel;
 
     protected Cliente(String nome, double limiteDeCredito, String className) {
         this.nome = nome;
         this.limiteDeCredito = limiteDeCredito;
-        this.limiteDeCreditoDisponivel = limiteDeCredito;
         this.logger = Logger.getLogger(className);
     }
 
     protected Cliente(String nome, double limiteDeCredito) {
         this.nome = nome;
         this.limiteDeCredito = limiteDeCredito;
-        this.limiteDeCreditoDisponivel = limiteDeCredito;
         this.logger = Logger.getLogger(Cliente.class.getName());
     }
 
@@ -41,19 +38,24 @@ public abstract class Cliente {
         this.limiteDeCredito = limiteDeCredito;
     }
 
-    public double getLimiteDeCreditoDisponivel() {
-        return limiteDeCreditoDisponivel;
+    protected abstract double comprar(double valor);
+
+    protected boolean autorizaCompra(double valor) {
+        return valor <= this.getLimiteDeCredito();
     }
 
-    public void setLimiteDeCreditoDisponivel(double limiteDeCreditoDisponivel) {
-        this.limiteDeCreditoDisponivel = limiteDeCreditoDisponivel;
+    protected void descontarLimiteDeCredito(double valor) {
+        this.setLimiteDeCredito(this.getLimiteDeCredito() - valor);
     }
 
-    public abstract comprar(double valor);
 
-    public bool
+    //TODO PAGAR AS CONTAS.
+    //TODO Adicionar atributo para acumular total de compras realizadas para clienteA
+    //refatorar para aumentar limite a cada 5 mil gastos.
 
-    //TODO tornar método abstrato forçando as classes a implementarem o método;
-    // certificar de fazer o desconto do limite após a autorização o compra.
-    //separar responsabilidades dos métodos  e criar testes unitários para todos os cenários.
+
+
+    //TODO 1 - Criar cadastro de clientes;
+    //TODO 2 - Criar serviço para comprar [fazer a lógica de acordo com os tipos de clientes, pagarConta, Adicionar Acumulador, Adicionar toda a lógica do comprar e testar tudo];
+    //TODO 3 - Criar API Rest;
 }

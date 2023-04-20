@@ -7,6 +7,14 @@ package com.matheus.entregapdi.cliente;
  */
 public class ClienteC extends Cliente {
     public ClienteC(String nome) {
-        super(nome,1000, ClienteC.class.getName());
+        super(nome, 1000, ClienteC.class.getName());
+    }
+
+    @Override
+    public double comprar(double valor) {
+        if (autorizaCompra(valor)) {
+            descontarLimiteDeCredito(valor);
+        }
+        return this.getLimiteDeCredito();
     }
 }
