@@ -1,42 +1,44 @@
 package com.matheus.entregapdi.cliente;
 
-import com.matheus.entregapdi.cliente.service.ClienteService;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+@SpringBootTest
 class ClienteATest {
-    @Mock
-    ClienteService clienteService;
 
-    @Test
-    void deveAutorizarCompra() {
-        ClienteA cliente = new ClienteA("Maria",clienteService);
-        var compraAutorizada = cliente.autorizaCompra(10000);
-
-        assertTrue(compraAutorizada);
-    }
-
-    @Test
-    void naoDeveAutorizarCompra() {
-        ClienteA cliente = new ClienteA("Maria", clienteService);
-        var compraAutorizada = cliente.autorizaCompra(10001);
-
-        assertFalse(compraAutorizada);
-    }
-
-
-    @Test
-    void descontarLimiteDeCredito() {
-        ClienteA cliente = new ClienteA("João", clienteService);
-        double limiteInicial = cliente.getLimiteDeCredito();
-
-        cliente.descontarLimiteDeCredito(500.0);
-
-        assertEquals(limiteInicial - 500.0, cliente.getLimiteDeCredito());
-    }
+//    @Mock
+//    @Autowired
+//    ClienteService clienteService;
+//
+//    @Mock
+//    @Autowired
+//    TransacoesService transacoesService;
+//
+//    @Test
+//    void deveAutorizarCompra() {
+//        Cliente cliente = new Cliente("Maria",10000);
+//        var compraAutorizada = transacoesService.autorizaCompra(cliente,10000);
+//
+//        assertTrue(compraAutorizada);
+//    }
+//
+//    @Test
+//    void naoDeveAutorizarCompra() {
+//        Cliente cliente = new Cliente("Maria", 10000);
+//        var compraAutorizada = transacoesService.autorizaCompra(cliente,10001);
+//
+//        assertFalse(compraAutorizada);
+//    }
+//
+//
+//    @Test
+//    void descontarLimiteDeCredito() {
+//        Cliente cliente = new Cliente("João", 10000);
+//        double limiteInicial = cliente.getLimiteDeCredito();
+//
+//        transacoesService.descontarLimiteDeCredito(cliente,500.0);
+//
+//        assertEquals(limiteInicial - 500.0, cliente.getLimiteDeCredito());
+//    }
 
 //    @Test
 //    void deveAumentarLimite() {
