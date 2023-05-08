@@ -1,0 +1,8 @@
+08/05/2023
+
+1 - Retirar responsabilidade do banco do service para o repository.
+2 - Usar o construtor na hora de new cliente.
+3 - Criar um buscar compra por cliente(ID, nome)
+4 - Refatorar o autorizaCompra e registraCompra para não passar o Cliente inteiro e somente os dados indispensáveis como o limiteCredito.
+5 - Criar referência de cliente na coleção compras do id_cliente com o _id do cliente na coleção clientes. Pesquisar sobre o método Populate.
+6 - Terminar o service do cliente e do compra com os testes unitários.

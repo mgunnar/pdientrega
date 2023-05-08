@@ -1,10 +1,9 @@
 package com.matheus.entregapdi.model;
 
 import com.matheus.entregapdi.enums.TipoCliente;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -13,15 +12,18 @@ import javax.persistence.Enumerated;
 @Document(collection = "clientes")
 public class Cliente {
 
-    @Id
-    @Field(name ="id")
-    private ObjectId id;
+    @MongoId
+    @Field(name = "_id")
+    private String id;
 
     @Field(name = "nome")
     private String nome;
 
     @Field(name = "limite_de_credito")
     private double limiteDeCredito;
+
+    @Field(name = "limite_de_credito_disponivel")
+    private double limiteDeCreditoDisponivel;
 
     @Enumerated(EnumType.STRING)
     @Field(name = "tipo_cliente")
@@ -34,14 +36,6 @@ public class Cliente {
     }
 
     public Cliente() {}
-
-    public ObjectId getId() {
-        return id;
-    }
-
-    public void setId(ObjectId id) {
-        this.id = id;
-    }
 
     public String getNome() {
         return nome;
@@ -68,6 +62,14 @@ public class Cliente {
         atualizarLimiteDeCredito();
     }
 
+    public double getLimiteDeCreditoDisponivel() {
+        return limiteDeCreditoDisponivel;
+    }
+
+    public void setLimiteDeCreditoDisponivel(double limiteDeCreditoDisponivel) {
+        this.limiteDeCreditoDisponivel = limiteDeCreditoDisponivel;
+    }
+
     private void atualizarLimiteDeCredito() {
         this.limiteDeCredito = tipoCliente.getLimiteCreditoInicial();
     }
@@ -86,8 +88,17 @@ public class Cliente {
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", limiteDeCredito=" + limiteDeCredito +
+                ", limiteDeCreditoDisponivel=" + limiteDeCreditoDisponivel +
                 ", tipoCliente=" + tipoCliente +
                 '}';
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
     }
 }
 

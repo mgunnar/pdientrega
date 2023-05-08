@@ -13,12 +13,11 @@ import java.util.List;
 @Service
 public class ClienteService {
 
-    private final MongoTemplate mongoTemplate;
-
     public static final Logger LOGGER = LoggerFactory.getLogger(ClienteService.class);
-
-        @Autowired
-        private ClienteRepository clienteRepository;
+    @Autowired
+    private final MongoTemplate mongoTemplate;
+    @Autowired
+    private ClienteRepository clienteRepository;
 
     public ClienteService(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
@@ -27,6 +26,16 @@ public class ClienteService {
     public Cliente salvar(Cliente cliente) {
         return mongoTemplate.save(cliente);
     }
+
+    public Cliente buscarPorId(String id) {
+        return mongoTemplate.findById(id, Cliente.class);
+    }
+
+    public Object apagar(String id) {
+        var cliente = buscarPorId(id);
+        return mongoTemplate.remove(cliente);
+    }
+
     public List<Cliente> buscarTodos() {
         return mongoTemplate.findAll(Cliente.class);
     }

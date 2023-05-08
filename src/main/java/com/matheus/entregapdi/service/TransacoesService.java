@@ -17,8 +17,6 @@ public class TransacoesService {
     private final MongoTemplate mongoTemplate;
     private static final Logger LOGGER = LoggerFactory.getLogger(ClienteService.class);
 
-    @Autowired
-    TransacoesRepository transacoesRepository;
 
     public TransacoesService(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
@@ -75,16 +73,16 @@ public class TransacoesService {
     }
 
     public void descontarLimiteDeCredito(Cliente cliente, double valor) {
-        cliente.setLimiteDeCredito(cliente.getLimiteDeCredito() - valor);
+        cliente.setLimiteDeCreditoDisponivel(cliente.getLimiteDeCreditoDisponivel() - valor);
     }
 
     public Boolean autorizaCompra(Cliente cliente, double valor) {
-        return valor <= cliente.getLimiteDeCredito();
+        return valor <= cliente.getLimiteDeCreditoDisponivel();
     }
 
-    public void salvar(Compra compra) {
+    public Compra salvar(Compra compra) {
         LOGGER.info("Registrando nova compra: {}", compra);
-        mongoTemplate.save(compra);
+        return mongoTemplate.save(compra);
     }
 
     public List<Compra> buscarTodos() {
