@@ -1,45 +1,41 @@
-package com.matheus.entregapdi.service;
+package com.matheus.entregapdi.business.service;
 
 import com.matheus.entregapdi.model.Cliente;
 import com.matheus.entregapdi.model.Compra;
 import com.matheus.entregapdi.repository.TransacoesRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
+@AllArgsConstructor
 public class TransacoesService {
 
-    private final MongoTemplate mongoTemplate;
-    private static final Logger LOGGER = LoggerFactory.getLogger(ClienteService.class);
-
-
-    public TransacoesService(MongoTemplate mongoTemplate) {
-        this.mongoTemplate = mongoTemplate;
-    }
+    private final TransacoesRepository transacoesRepository;
 
 
     public Compra comprar(Cliente cliente, Double valorCompra) {
 
         Compra compra = new Compra();
 
-        if (autorizaCompra(cliente, valorCompra)) {
+        boolean isCompraAutorizada = autorizaCompra(cliente, valorCompra);
+
+        if (isCompraAutorizada) {
 
             var valorCompraDescontado = verificaDescontoCompra(valorCompra, cliente.getValorMinimoCompraParaTerDesconto(), cliente.getPercentualDesconto());
 
-            LOGGER.info("Total: {}", valorCompraDescontado);
+            log.info("Total: {}", valorCompraDescontado);
 
             descontarLimiteDeCredito(cliente, valorCompraDescontado);
-            registraCompra(cliente, valorCompra);
+            registraCompra(valorCompra);
 
             return compra;
         }
 
-        LOGGER.info("NÃO AUTORIZADA - Compra no valor de R$ {} .", valorCompra);
+        log.info("NÃO AUTORIZADA - Compra no valor de R$ {} .", valorCompra);
 
         return compra;
     }
@@ -48,27 +44,27 @@ public class TransacoesService {
 
         if (valorCompra >= valorMinimoParaDesconto) {
 
-            LOGGER.info("AUTORIZADA - Compra no valor de R$ {}.", valorCompra);
+            log.info("AUTORIZADA - Compra no valor de R$ {}.", valorCompra);
             var desconto = valorCompra * porcentagem;
-            LOGGER.info("Desconto aplicado R$ {}.",desconto);
+            log.info("Desconto aplicado R$ {}.", desconto);
 
             return valorCompra - desconto;
         }
 
-        LOGGER.info("Não foi aplicado desconto na compra.");
+        log.info("Não foi aplicado desconto na compra.");
 
         return valorCompra;
     }
 
-    private void registraCompra(Cliente cliente, Double valorCompra) {
+    private void registraCompra(Double valorCompra) {
 
         var compra = new Compra();
 
         compra.setValorTotalCompra(valorCompra);
-        salvar(compra);
+        salvarCompra(compra);
     }
 
-    public Double verificaAumentoLimiteAposCompra(Cliente cliente, double valorCompra) {
+    public Double verificaAumentoLimiteAposCompra(double valorCompra) {
         return valorCompra;
     }
 
@@ -80,13 +76,14 @@ public class TransacoesService {
         return valor <= cliente.getLimiteDeCreditoDisponivel();
     }
 
-    public Compra salvar(Compra compra) {
-        LOGGER.info("Registrando nova compra: {}", compra);
-        return mongoTemplate.save(compra);
+    public Compra salvarCompra(Compra compra) {
+        log.info("Registrando nova compra: {}", compra);
+        return transacoesRepository.save(compra);
     }
 
-    public List<Compra> buscarTodos() {
-        LOGGER.info("Buscando todas as transações.");
-        return mongoTemplate.findAll(Compra.class);
+    public List<Compra> buscarTodasAsTransacoes() {
+        log.info("Buscando todas as transações.");
+        return transacoesRepository.findAll();
     }
+
 }
