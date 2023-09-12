@@ -28,11 +28,11 @@ public class CreditoRest {
 
         var path = "GET " + "/v1/clientes/buscar-todos";
 
-        log.info("Path: {}", path);
+//        log.info("Path: {}", path);
 
         var response = clienteService.buscarTodos();
 
-        log.info("Response {} -> {}", path, response);
+//        log.info("Response {} -> {}", path, response);
 
         return ResponseEntity.ok(response);
     }
@@ -43,7 +43,7 @@ public class CreditoRest {
 
         var path = "POST " + "/v1/clientes/cadastrar";
 
-        log.info("Path: {}", path);
+//        log.info("Path: {}", path);
 
         var novoCliente = new Cliente();
 
@@ -53,7 +53,7 @@ public class CreditoRest {
 
         var clienteSalvo = clienteService.salvar(novoCliente);
 
-        log.info("Response {} -> {}", path, clienteSalvo);
+//        log.info("Response {} -> {}", path, clienteSalvo);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(clienteSalvo);
 
@@ -61,32 +61,20 @@ public class CreditoRest {
 
     @Operation(summary = "Buscar um cliente por ID", description = "Busca um cliente por ID inserido.")
     @GetMapping("/clientes/buscar/{id}")
-    public ResponseEntity<Cliente> buscarClientePorId(@PathVariable("id") String id) {
+    public ResponseEntity<Cliente> buscarClientePorId(@PathVariable("id") Long id) {
         var path = "GET " + "/v1/clientes/" + id;
 
-        log.info("Path: {}", path);
+
+
+//        log.info("Path: {}", path);
 
         var cliente = clienteService.buscarPorId(id);
 
-        if (cliente == null) {
-            log.info("Cliente com ID {} não encontrado.", id);
+        if (cliente.isEmpty()) {
+//            log.info("Cliente com ID {} não encontrado.", id);
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok(cliente);
-    }
-
-    @Operation(summary = "Excluir um cliente por ID", description = "Exclui um cliente por ID")
-    @DeleteMapping("/clientes/apagar/{id}")
-    public ResponseEntity excluirClientePorId(@PathVariable("id") String id) {
-        var path = "DELETE " + "/v1/clientes/" + id;
-
-        log.info("Path: {}", path);
-
-        clienteService.apagar(id);
-
-        log.info("Response {} -> NO CONTENT", path);
-
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(cliente.get());
     }
 }

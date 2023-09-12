@@ -1,37 +1,35 @@
 package com.matheus.entregapdi.model;
 
-import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
-import org.springframework.data.mongodb.core.mapping.MongoId;
-import org.springframework.format.annotation.DateTimeFormat;
-
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.sql.Timestamp;
 import java.util.Date;
 
-@Document(collection = "compras")
+@Entity(name = "compras")
 public class Compra {
 
-    @MongoId
-    @Field(name ="_id")
-    private ObjectId id;
+    @Id
+    @Column(name = "id")
+    private Long id;
 
-    @Field(name ="valor_total_compra")
+    @Column(name = "valor_total_compra")
     Double valorTotalCompra;
 
-    @Field(name = "hora_transacao")
+    @Column(name = "hora_transacao")
     private Date horaTransacao;
 
-    @Field(name = "cliente_id")
-    private String clienteId;
+    @Column(name = "cliente_id")
+    private Long clienteId;
 
-    public Compra() {}
+    public Compra() {
+    }
 
-    public ObjectId getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -51,11 +49,11 @@ public class Compra {
         this.horaTransacao = horaTransacao;
     }
 
-    public String getClienteId() {
+    public Long getClienteId() {
         return clienteId;
     }
 
-    public void setClienteId(String clienteId) {
+    public void setClienteId(Long clienteId) {
         this.clienteId = clienteId;
     }
 

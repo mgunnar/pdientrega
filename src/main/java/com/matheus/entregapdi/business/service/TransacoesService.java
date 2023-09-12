@@ -3,7 +3,6 @@ package com.matheus.entregapdi.business.service;
 import com.matheus.entregapdi.model.Cliente;
 import com.matheus.entregapdi.model.Compra;
 import com.matheus.entregapdi.repository.TransacoesRepository;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +10,14 @@ import java.util.List;
 
 @Service
 @Slf4j
-@AllArgsConstructor
 public class TransacoesService {
 
+
     private final TransacoesRepository transacoesRepository;
+
+    public TransacoesService(TransacoesRepository transacoesRepository) {
+        this.transacoesRepository = transacoesRepository;
+    }
 
 
     public Compra comprar(Cliente cliente, Double valorCompra) {
@@ -27,7 +30,7 @@ public class TransacoesService {
 
             var valorCompraDescontado = verificaDescontoCompra(valorCompra, cliente.getValorMinimoCompraParaTerDesconto(), cliente.getPercentualDesconto());
 
-            log.info("Total: {}", valorCompraDescontado);
+//            log.info("Total: {}", valorCompraDescontado);
 
             descontarLimiteDeCredito(cliente, valorCompraDescontado);
             registraCompra(valorCompra);
@@ -44,14 +47,14 @@ public class TransacoesService {
 
         if (valorCompra >= valorMinimoParaDesconto) {
 
-            log.info("AUTORIZADA - Compra no valor de R$ {}.", valorCompra);
+//            log.info("AUTORIZADA - Compra no valor de R$ {}.", valorCompra);
             var desconto = valorCompra * porcentagem;
-            log.info("Desconto aplicado R$ {}.", desconto);
+//            log.info("Desconto aplicado R$ {}.", desconto);
 
             return valorCompra - desconto;
         }
 
-        log.info("Não foi aplicado desconto na compra.");
+//        log.info("Não foi aplicado desconto na compra.");
 
         return valorCompra;
     }
@@ -77,12 +80,12 @@ public class TransacoesService {
     }
 
     public Compra salvarCompra(Compra compra) {
-        log.info("Registrando nova compra: {}", compra);
+//        log.info("Registrando nova compra: {}", compra);
         return transacoesRepository.save(compra);
     }
 
     public List<Compra> buscarTodasAsTransacoes() {
-        log.info("Buscando todas as transações.");
+//        log.info("Buscando todas as transações.");
         return transacoesRepository.findAll();
     }
 

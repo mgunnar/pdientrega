@@ -1,12 +1,13 @@
 package com.matheus.entregapdi;
 
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
-@OpenAPIDefinition
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
+@SpringBootApplication@EntityScan(basePackages = {"EntityPackage"} )
+@EnableJpaRepositories(basePackages = {"RepositoryPackage"})
 public class Main {
     public static void main(String[] args) {
 

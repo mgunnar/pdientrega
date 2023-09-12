@@ -1,32 +1,28 @@
 package com.matheus.entregapdi.model;
 
 import com.matheus.entregapdi.enums.TipoCliente;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
-import org.springframework.data.mongodb.core.mapping.MongoId;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 
 
-@Document(collection = "clientes")
+@Entity(name = "clientes")
 public class Cliente {
 
-    @MongoId
-    @Field(name = "_id")
+    @Id
+    @Column(name = "_id")
     private String id;
 
-    @Field(name = "nome")
+    @Column(name = "nome")
     private String nome;
 
-    @Field(name = "limite_de_credito")
+    @Column(name = "limite_de_credito")
     private double limiteDeCredito;
 
-    @Field(name = "limite_de_credito_disponivel")
+    @Column(name = "limite_de_credito_disponivel")
     private double limiteDeCreditoDisponivel;
 
     @Enumerated(EnumType.STRING)
-    @Field(name = "tipo_cliente")
+    @Column(name = "tipo_cliente")
     private TipoCliente tipoCliente;
 
     public Cliente(String nome, TipoCliente tipoCliente) {

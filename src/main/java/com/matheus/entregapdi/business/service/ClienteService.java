@@ -1,36 +1,27 @@
 package com.matheus.entregapdi.business.service;
 
 import com.matheus.entregapdi.model.Cliente;
+import com.matheus.entregapdi.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
-@Service
+@Service("clienteService")
 public class ClienteService {
 
-    @Autowired
-    private final MongoTemplate mongoTemplate;
-
-    public ClienteService(MongoTemplate mongoTemplate) {
-        this.mongoTemplate = mongoTemplate;
-    }
+    public ClienteRepository clienteRepository;
 
     public Cliente salvar(Cliente cliente) {
-        return mongoTemplate.save(cliente);
+        return clienteRepository.save(cliente);
     }
 
-    public Cliente buscarPorId(String id) {
-        return mongoTemplate.findById(id, Cliente.class);
-    }
-
-    public Object apagar(String id) {
-        var cliente = buscarPorId(id);
-        return mongoTemplate.remove(cliente);
+    public Optional<Cliente> buscarPorId(Long id) {
+        return clienteRepository.findById(id);
     }
 
     public List<Cliente> buscarTodos() {
-        return mongoTemplate.findAll(Cliente.class);
+        return (List<Cliente>) clienteRepository.findAll();
     }
 }

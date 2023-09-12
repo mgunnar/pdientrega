@@ -7,7 +7,7 @@ public class CompraRequestDTO {
     Double valorTotalCompra;
 
     @ApiModelProperty(value = "ID do comprador.", example = "123456789")
-    private String clienteId;
+    private Long clienteId;
 
 
     public Double getValorTotalCompra() {
@@ -18,11 +18,11 @@ public class CompraRequestDTO {
         this.valorTotalCompra = valorTotalCompra;
     }
 
-    public String getClienteId() {
+    public Long getClienteId() {
         return clienteId;
     }
 
-    public void setClienteId(String clienteId) {
+    public void setClienteId(Long clienteId) {
         this.clienteId = clienteId;
     }
 }

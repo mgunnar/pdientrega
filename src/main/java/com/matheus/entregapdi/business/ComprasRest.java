@@ -39,14 +39,15 @@ public class ComprasRest {
         novaCompra.setClienteId(compra.getClienteId());
         novaCompra.setValorTotalCompra(compra.getValorTotalCompra());
         novaCompra.setHoraTransacao(Timestamp.valueOf(LocalDateTime.now()));
+
         var cliente = clienteService.buscarPorId(compra.getClienteId());
 
-        if (cliente == null) {
+        if (cliente.isEmpty()) {
             log.info("Cliente com ID {} não encontrado.", compra.getClienteId());
             return ResponseEntity.notFound().build();
         }
 
-        var compraRegistrada =  transacoesService.comprar(cliente, novaCompra.getValorTotalCompra());
+        var compraRegistrada =  transacoesService.comprar(cliente.get(), novaCompra.getValorTotalCompra());
 
         log.info("Response {} -> {}", path, compraRegistrada);
 
