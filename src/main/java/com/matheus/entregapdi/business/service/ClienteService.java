@@ -11,6 +11,7 @@ import java.util.Optional;
 @Service("clienteService")
 public class ClienteService {
 
+    @Autowired
     public ClienteRepository clienteRepository;
 
     public Cliente salvar(Cliente cliente) {

@@ -9,8 +9,9 @@ import javax.persistence.*;
 public class Cliente {
 
     @Id
-    @Column(name = "_id")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id")
+    private Long id;
 
     @Column(name = "nome")
     private String nome;
@@ -89,11 +90,11 @@ public class Cliente {
                 '}';
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 }

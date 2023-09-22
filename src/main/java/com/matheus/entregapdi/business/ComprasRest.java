@@ -7,6 +7,7 @@ import com.matheus.entregapdi.business.service.TransacoesService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,10 @@ import java.util.List;
 @Slf4j
 public class ComprasRest {
 
+    @Autowired
     private ClienteService clienteService;
+
+    @Autowired
     private TransacoesService transacoesService;
 
     public static final String BASE_URI = "/v1";

@@ -3,6 +3,7 @@ package com.matheus.entregapdi.business.service;
 import com.matheus.entregapdi.model.Cliente;
 import com.matheus.entregapdi.model.Compra;
 import com.matheus.entregapdi.repository.TransacoesRepository;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,13 +11,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 @Slf4j
 public class TransacoesService {
 
-
-    @Autowired
     private TransacoesRepository transacoesRepository;
-
 
 
     public Compra comprar(Cliente cliente, Double valorCompra) {
